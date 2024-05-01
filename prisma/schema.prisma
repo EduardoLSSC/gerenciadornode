@@ -4,28 +4,17 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://root@localhost:3306/dblogin"
 }
 
 model User {
   id         Int      @id @default(autoincrement())
   email      String   @unique
+  birthday   DateTime
   name       String
   password   String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  tasks      Task[]
 
   @@map("tb_user")
-}
-
-model Task {
-  id           Int      @id @default(autoincrement())
-  description  String
-  initial_date DateTime
-  final_date   DateTime
-  user         User     @relation(fields: [userId], references: [id])
-  userId       Int
-
-  @@map("tb_task")
 }
